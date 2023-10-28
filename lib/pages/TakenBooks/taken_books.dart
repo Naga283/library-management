@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/appbar_widget.dart';
 import 'package:library_books_management/pages/TakenBooks/dropdown_with_btn.dart';
+import 'package:library_books_management/pages/TakenBooks/return_book_btn.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
+import 'package:library_books_management/utils/screen_size_utils.dart';
 import 'package:library_books_management/utils/styles.dart';
 
 class TakenBooks extends ConsumerStatefulWidget {
@@ -15,20 +18,16 @@ class TakenBooks extends ConsumerStatefulWidget {
 class _TakenBooksState extends ConsumerState<TakenBooks> {
   @override
   Widget build(BuildContext context) {
-    List<String> list = ["Book1", "Book2"];
     final bookDetails = ref.watch(getDetailsFutureProvider);
-    String dropDownValue = "The Last Man Who Knew Everything";
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.6,
-          title: Text(
-            "Take Books",
-            style: TextStyle(
-              color: appColors.primary,
-            ),
+        appBar: PreferredSize(
+          preferredSize: Size(
+            screenSizeUtils.screenWidth(context),
+            50,
           ),
-          centerTitle: true,
-          backgroundColor: appColors.whiteColor,
+          child: AppBarWidget(
+            appbarName: "Take Books",
+          ),
         ),
         body: bookDetails.when(data: (data) {
           return Padding(
@@ -37,7 +36,6 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DropDownWithBtn(
-                  dropDownValue: dropDownValue,
                   list: data.readingLogEntries,
                 ),
                 Padding(
@@ -78,22 +76,8 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("Author"),
-                                SizedBox(
-                                  height: 26,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.grey,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 0)),
-                                      onPressed: () {},
-                                      child: Text(
-                                        "Return",
-                                        style: TextStyle(fontSize: 13),
-                                      )),
+                                ReturnBookBtn(
+                                  title: 'Book 1',
                                 )
                               ],
                             ),

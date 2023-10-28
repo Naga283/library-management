@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/modals/reading_log.dart';
+import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 
 class DropDownWithBtn extends ConsumerWidget {
   const DropDownWithBtn({
     super.key,
-    required this.dropDownValue,
     required this.list,
   });
 
-  final String dropDownValue;
   final List<ReadingLogEntry> list;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(selectBookFromDropdownProvider);
     return Column(
       children: [
         Container(
@@ -29,8 +29,11 @@ class DropDownWithBtn extends ConsumerWidget {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton(
-              value: list.first,
-              onChanged: (val) {},
+              hint: Text("Select book for Borrow"),
+              value: ref.watch(selectBookFromDropdownProvider),
+              onChanged: (val) {
+                ref.read(selectBookFromDropdownProvider.notifier).state = val;
+              },
               items: list.map<DropdownMenuItem<ReadingLogEntry>>(
                   (ReadingLogEntry value) {
                 return DropdownMenuItem<ReadingLogEntry>(
