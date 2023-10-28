@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/pages/home_page.dart';
 import 'package:library_books_management/pages/splash_screen.dart';
 
 import 'firebase_options.dart';
@@ -15,14 +18,15 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    print("Current userid" + userId.toString());
     return MaterialApp(
       title: 'Library app Management',
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: const SplashScreen(),
+      home: userId == null ? const SplashScreen() : const HomePage(),
       // home: const HomePage(),
     );
   }

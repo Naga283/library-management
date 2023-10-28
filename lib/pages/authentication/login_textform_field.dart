@@ -8,16 +8,25 @@ class LoginTextFormField extends ConsumerWidget {
     required this.textEditingController,
     this.suffixIcon,
     this.obscureText,
+    this.errorText,
   });
   final String hintText;
   final TextEditingController textEditingController;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final String? errorText;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: 50,
+      height: 72,
       child: TextFormField(
+        validator: (v) {
+          if (v!.isEmpty) {
+            return "Please enter $hintText";
+          } else {
+            return null;
+          }
+        },
         controller: textEditingController,
         obscureText: obscureText ?? false,
         decoration: InputDecoration(
@@ -32,6 +41,7 @@ class LoginTextFormField extends ConsumerWidget {
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
           ),
+          errorText: errorText,
           fillColor: Colors.grey.withOpacity(0.3),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

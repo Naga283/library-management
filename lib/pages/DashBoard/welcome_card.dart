@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/providers/user_name_state_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
 
 class WelcomeCard extends ConsumerWidget {
@@ -23,7 +24,7 @@ class WelcomeCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Welcome Naga!",
+              "Welcome ${ref.watch(userNameStateProvider)}!",
               style: TextStyle(
                 color: appColors.whiteColor,
                 fontSize: 20,

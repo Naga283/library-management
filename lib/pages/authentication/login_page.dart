@@ -5,6 +5,8 @@ import 'package:library_books_management/pages/authentication/icon_with_heading_
 import 'package:library_books_management/pages/authentication/login_textform_field.dart';
 import 'package:library_books_management/pages/authentication/password_text_form_field.dart';
 import 'package:library_books_management/pages/authentication/register_page.dart';
+import 'package:library_books_management/providers/textformfield_error_text_state_provider.dart';
+import 'package:library_books_management/services/firebase_authentication.dart';
 import 'package:library_books_management/utils/colors.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -17,6 +19,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +36,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               heading: 'Login',
             ),
             Form(
+              key: _formKey,
               child: Column(
                 children: [
                   SizedBox(
@@ -48,6 +52,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   PasswordTextFormField(
                     isPasswordVisible: isPasswordVisible,
                     passwordController: passwordController,
+                    errorText: ref.watch(errorTextFormProvider),
                     onTap: () {
                       setState(() {
                         if (isPasswordVisible) {
@@ -103,7 +108,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         child: ExpandedElevatedBtn(
           btnName: "Login",
-          onTap: () {},
+          onTap: () async {
+            if (_formKey.currentState?.validate() ?? false) {
+              await loginWithEmailAndPassword(
+                emailController.text,
+                passwordController.text,
+                context,
+                ref,
+              );
+            }
+          },
         ),
       ),
     );

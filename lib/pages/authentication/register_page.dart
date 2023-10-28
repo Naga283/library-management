@@ -5,6 +5,7 @@ import 'package:library_books_management/pages/authentication/icon_with_heading_
 import 'package:library_books_management/pages/authentication/login_page.dart';
 import 'package:library_books_management/pages/authentication/login_textform_field.dart';
 import 'package:library_books_management/pages/authentication/password_text_form_field.dart';
+import 'package:library_books_management/services/firebase_authentication.dart';
 import 'package:library_books_management/utils/colors.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
@@ -17,6 +18,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
@@ -34,28 +36,35 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             SizedBox(
               height: 30,
             ),
-            LoginTextFormField(
-              hintText: "Full name",
-              textEditingController: fullNameController,
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  LoginTextFormField(
+                    hintText: "Full name",
+                    textEditingController: fullNameController,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  LoginTextFormField(
+                    hintText: "Your e-mail",
+                    textEditingController: emailController,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  PasswordTextFormField(
+                      isPasswordVisible: isPasswordVisible,
+                      passwordController: passwordController,
+                      onTap: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
+                      }),
+                ],
+              ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            LoginTextFormField(
-              hintText: "Your e-mail",
-              textEditingController: fullNameController,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            PasswordTextFormField(
-                isPasswordVisible: isPasswordVisible,
-                passwordController: passwordController,
-                onTap: () {
-                  setState(() {
-                    isPasswordVisible = !isPasswordVisible;
-                  });
-                }),
             SizedBox(
               height: 13,
             ),
@@ -87,7 +96,17 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         ),
         child: ExpandedElevatedBtn(
           btnName: "Register",
-          onTap: () {},
+          onTap: () async {
+            if (_formKey.currentState?.validate() ?? false) {
+              await registerWithEmailAndPassword(
+                fullNameController.text,
+                emailController.text,
+                passwordController.text,
+                context,
+                ref,
+              );
+            }
+          },
         ),
       ),
     );

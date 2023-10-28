@@ -8,16 +8,19 @@ class PasswordTextFormField extends ConsumerWidget {
     required this.isPasswordVisible,
     required this.passwordController,
     required this.onTap,
+    this.errorText,
   });
 
   final bool isPasswordVisible;
   final TextEditingController passwordController;
   final Function() onTap;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return LoginTextFormField(
       hintText: 'Password',
+      errorText: errorText,
       obscureText: isPasswordVisible,
       textEditingController: passwordController,
       suffixIcon: IconButton(

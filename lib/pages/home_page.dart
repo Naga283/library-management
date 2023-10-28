@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:library_books_management/pages/DashBoard/dashBoard.dart';
+import 'package:library_books_management/pages/DashBoard/dashboard.dart';
 import 'package:library_books_management/pages/books_page.dart';
 import 'package:library_books_management/pages/ReturnedBooks/return_books.dart';
 import 'package:library_books_management/pages/TakenBooks/taken_books.dart';
 import 'package:library_books_management/providers/bottom_navbar_current_index_provider.dart';
+import 'package:library_books_management/services/get_current_user_name.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,9 +22,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     const TakenBooks(),
     const ReturnBooks(),
   ];
+
   @override
   Widget build(BuildContext context) {
     int currentIndex = ref.watch(currentIndexStateProvider);
+
     return Scaffold(
       body: widgetsPages[currentIndex],
       bottomNavigationBar: SalomonBottomBar(
