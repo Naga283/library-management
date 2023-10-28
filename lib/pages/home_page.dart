@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/pages/DashBoard/dashboard.dart';
 import 'package:library_books_management/pages/books_page.dart';
 import 'package:library_books_management/pages/ReturnedBooks/return_books.dart';
@@ -39,6 +40,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         currentIndex: currentIndex,
         onTap: (p0) {
           ref.read(currentIndexStateProvider.notifier).state = p0;
+          if (p0 == 3) {
+            ref.invalidate(returnBooksFutureProvider);
+          }
         },
         items: [
           /// Home

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/providers/firestore_providers/firestore_provider.dart';
+import 'package:library_books_management/providers/home_page_providers/return_count_state_provider.dart';
 
 final returnBooksFutureProvider =
     FutureProvider<List<ReadingLogEntry>>((ref) async {
@@ -17,6 +18,6 @@ final returnBooksFutureProvider =
   final List<ReadingLogEntry> myDataList = query.docs.map((doc) {
     return ReadingLogEntry.fromJson(doc.data() as Map<String, dynamic>);
   }).toList();
-
+  ref.read(returnCountStateProvider.notifier).state = myDataList.length;
   return myDataList;
 });
