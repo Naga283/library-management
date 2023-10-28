@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:library_books_management/components/button_widget.dart';
+import 'package:library_books_management/pages/authentication/login_page.dart';
 import 'package:library_books_management/pages/home_page.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
@@ -44,8 +45,10 @@ class SplashScreen extends StatelessWidget {
                   btnName: 'Login',
                   textColor: appColors.whiteColor,
                   onTap: () {
+                    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    //     builder: (context) => const HomePage()));
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const HomePage()));
+                        builder: (context) => const LoginPage()));
                   },
                 ),
               ],

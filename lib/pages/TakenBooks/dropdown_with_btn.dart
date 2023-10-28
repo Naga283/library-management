@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/expanded_elevated_btn.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/providers/select_book_from_dropdown.dart';
-import 'package:library_books_management/utils/colors.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 
 class DropDownWithBtn extends ConsumerWidget {
@@ -53,22 +53,9 @@ class DropDownWithBtn extends ConsumerWidget {
           ),
         ),
         SizedBox(height: 10),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.05,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: appColors.primary,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Center(
-            child: Text(
-              "Borrow",
-              style: TextStyle(
-                color: appColors.whiteColor,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
+        ExpandedElevatedBtn(
+          btnName: 'Borrow',
+          onTap: () {},
         )
       ],
     );
