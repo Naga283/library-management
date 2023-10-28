@@ -5,8 +5,10 @@ class ReturnBookBtn extends ConsumerWidget {
   const ReturnBookBtn({
     super.key,
     required this.title,
+    required this.onTapOk,
   });
   final String title;
+  final Function() onTapOk;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
@@ -31,7 +33,7 @@ class ReturnBookBtn extends ConsumerWidget {
                         child: const Text('Cancel'),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
+                        onPressed: onTapOk,
                         child: const Text('OK'),
                       ),
                     ],

@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/components/expanded_elevated_btn.dart';
 import 'package:library_books_management/modals/reading_log.dart';
+import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 
-class DropDownWithBtn extends ConsumerWidget {
+class DropDownWithBtn extends ConsumerStatefulWidget {
   const DropDownWithBtn({
     super.key,
     required this.list,
@@ -14,7 +17,15 @@ class DropDownWithBtn extends ConsumerWidget {
   final List<ReadingLogEntry> list;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DropDownWithBtn> createState() => _DropDownWithBtnState();
+}
+
+class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final userId = FirebaseAuth.instance.currentUser;
+
+  @override
+  Widget build(BuildContext context) {
     ref.watch(selectBookFromDropdownProvider);
     return Column(
       children: [
@@ -34,7 +45,7 @@ class DropDownWithBtn extends ConsumerWidget {
               onChanged: (val) {
                 ref.read(selectBookFromDropdownProvider.notifier).state = val;
               },
-              items: list.map<DropdownMenuItem<ReadingLogEntry>>(
+              items: widget.list.map<DropdownMenuItem<ReadingLogEntry>>(
                   (ReadingLogEntry value) {
                 return DropdownMenuItem<ReadingLogEntry>(
                   value: value,
@@ -55,7 +66,13 @@ class DropDownWithBtn extends ConsumerWidget {
         SizedBox(height: 10),
         ExpandedElevatedBtn(
           btnName: 'Borrow',
-          onTap: () {},
+          onTap: () {
+            if (ref.watch(selectBookFromDropdownProvider) != null) {
+              users.doc(userId?.uid).collection("Taken").add(
+                  ref.watch(selectBookFromDropdownProvider)?.toJson() ?? {});
+              ref.invalidate(takenBooksFutureProvider);
+            } else {}
+          },
         )
       ],
     );

@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:library_books_management/pages/DashBoard/dashboard.dart';
+import 'package:library_books_management/pages/home_page.dart';
 import 'package:library_books_management/providers/textformfield_error_text_state_provider.dart';
 import 'package:library_books_management/services/get_current_user_name.dart';
 
@@ -29,7 +28,7 @@ Future<void> registerWithEmailAndPassword(String fullName, String email,
     // Handle success or navigate to the next screen.
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (builder) {
-      return const DashBoard();
+      return const HomePage();
     }), (route) => false);
   } catch (e) {
     // Handle registration errors (e.g., email already exists, weak password, etc.).
@@ -41,7 +40,6 @@ Future<void> logoutUser() async {
   try {
     await FirebaseAuth.instance.signOut();
   } catch (e) {
-    print("Error in Logging out");
     throw Exception();
   }
 }
@@ -55,7 +53,7 @@ Future<void> loginWithEmailAndPassword(
     await getCurrentUserFullName(ref);
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (builder) {
-      return const DashBoard();
+      return const HomePage();
     }), (route) => false);
   } catch (e) {
     if (e is FirebaseAuthException) {

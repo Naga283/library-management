@@ -22,6 +22,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     const TakenBooks(),
     const ReturnBooks(),
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUserFullName(ref);
+  }
 
   @override
   Widget build(BuildContext context) {
