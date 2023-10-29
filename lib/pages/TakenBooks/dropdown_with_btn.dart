@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_books_management/components/expanded_elevated_btn.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
@@ -74,6 +75,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
               ref.read(selectBookFromDropdownProvider.notifier).state = null;
               ref.invalidate(takenBooksFutureProvider);
               ref.invalidate(getDetailsFutureProvider);
+              Fluttertoast.showToast(msg: "Successfull Added");
             } else {}
           },
         )

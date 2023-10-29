@@ -21,12 +21,11 @@ class BooksCount extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Book Details",
             style: TextStyle(
               fontWeight: FontWeight.w800,
-              fontSize: 19,
-              color: appColors.primary,
+              fontSize: 20,
             ),
           ),
           Padding(

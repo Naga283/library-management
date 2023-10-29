@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
@@ -119,6 +120,9 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                                               ref.invalidate(
                                                   getDetailsFutureProvider);
                                               Navigator.of(context).pop();
+                                              Fluttertoast.showToast(
+                                                msg: "Successfull Returned",
+                                              );
                                             });
                                           },
                                         )

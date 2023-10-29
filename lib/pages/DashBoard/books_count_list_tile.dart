@@ -14,6 +14,7 @@ class BooksCountListTile extends StatelessWidget {
   final String heading;
   final String subHeading;
   final String count;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,9 +29,21 @@ class BooksCountListTile extends StatelessWidget {
         boxShadow: appStyles.boxShadow,
       ),
       child: ListTile(
-        title: Text(heading),
+        title: Text(
+          heading,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
         subtitle: Text(subHeading),
-        trailing: Text(count),
+        trailing: Text(
+          count,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            color: borderColor,
+          ),
+        ),
       ),
     );
   }
