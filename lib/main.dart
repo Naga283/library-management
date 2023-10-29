@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Library app Management',
       theme: ThemeData(fontFamily: 'Poppins'),
       home: const SplashScreen(),

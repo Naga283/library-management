@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/error_image_widget.dart';
 import 'package:library_books_management/pages/loading/loading_widget.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
@@ -23,11 +24,12 @@ class BooksPage extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications,
-                color: appColors.primary,
-              ))
+            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications,
+              color: Colors.grey,
+            ),
+          ),
         ],
         centerTitle: true,
         backgroundColor: appColors.whiteColor,
@@ -39,14 +41,10 @@ class BooksPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 18),
-                // child: Text(
-                //   "Available Books",
-                //   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                // ),
+                padding: const EdgeInsets.symmetric(vertical: 18),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     hintText: 'Search Book',
                     contentPadding: const EdgeInsets.symmetric(
                       vertical: 4.0,
@@ -68,7 +66,7 @@ class BooksPage extends ConsumerWidget {
                           ? Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(5),
+                                  margin: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                       color: appColors.whiteColor,
                                       boxShadow: [
@@ -76,7 +74,7 @@ class BooksPage extends ConsumerWidget {
                                           color: Colors.grey.shade300,
                                           blurRadius: 4.0, // soften the shadow
                                           spreadRadius: 2.0, //extend the shadow
-                                          offset: Offset(
+                                          offset: const Offset(
                                             0.0, // Move to right 5  horizontally
                                             0.0, // Move to bottom 5 Vertically
                                           ),
@@ -87,24 +85,28 @@ class BooksPage extends ConsumerWidget {
                                     leading: Image.network(
                                       'https://covers.openlibrary.org/b/id/${data.readingLogEntries[index].work?.coverId}.jpg',
                                       height: 100,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return ErrorImageWidget(
+                                            getBookDetails: data
+                                                    .readingLogEntries[index]
+                                                    .work
+                                                    ?.title?[0]
+                                                    .toUpperCase() ??
+                                                '');
+                                      },
                                     ),
                                     title: Row(
-                                      // crossAxisAlignment:
-                                      //     CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Flexible(
-                                            child: Text(book?.title ?? '')),
-                                        Icon(
+                                          child: Text(book?.title ?? ''),
+                                        ),
+                                        const Icon(
                                           Icons.favorite_border,
                                           size: 20,
                                         ),
-                                        // Icon(
-                                        //   Icons.favorite,
-                                        //   color: appColors.primary,
-                                        //   size: 20,
-                                        // ),
                                       ],
                                     ),
                                     subtitle: Row(

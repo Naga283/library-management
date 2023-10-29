@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/error_image_widget.dart';
 import 'package:library_books_management/modals/get_book_details.dart';
 import 'package:library_books_management/providers/bottom_navbar_current_index_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
@@ -52,6 +53,14 @@ class RecentlyAdded extends ConsumerWidget {
                         child: Image.network(
                           "https://covers.openlibrary.org/b/id/${getBookDetails.readingLogEntries[index].work?.coverId}-M.jpg",
                           height: 120,
+                          errorBuilder: (context, error, stackTrace) {
+                            return ErrorImageWidget(
+                              getBookDetails: getBookDetails
+                                      .readingLogEntries[index].work?.title?[0]
+                                      .toUpperCase() ??
+                                  "",
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(height: 5),

@@ -21,10 +21,10 @@ class _ReturnBooksState extends ConsumerState<ReturnBooks> {
     final returnedBooks = ref.watch(returnBooksFutureProvider);
     return Scaffold(
         appBar: PreferredSize(
-          child: AppBarWidget(
-            appbarName: "Return Books",
-          ),
           preferredSize: Size(screenSizeUtils.screenWidth(context), 50),
+          child: const AppBarWidget(
+            appbarName: "Returned Books",
+          ),
         ),
         body: returnedBooks.when(data: (data) {
           return data.isNotEmpty
@@ -32,23 +32,26 @@ class _ReturnBooksState extends ConsumerState<ReturnBooks> {
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
                           color: appColors.whiteColor,
                           boxShadow: appStyles.boxShadow,
                           borderRadius: BorderRadius.circular(6)),
                       child: ListTile(
-                        title: Text(data[index].work?.title ?? ''),
+                        title: Text(data[index].work?.title ?? 'No Title'),
                         subtitle: Row(
                           children: [
-                            Text(data[index].work?.authorNames?[0] ?? ''),
+                            Text(data[index].work!.authorNames!.isNotEmpty
+                                ? (data[index].work?.authorNames?[0] ?? '')
+                                : 'No Author'),
                           ],
                         ),
-                        trailing: Text("Returned on \n 12/03/1023"),
+                        trailing: const Text("Returned on \n 12/03/1023"),
                       ),
                     );
                   })
-              : Center(child: Text("No Books Returned"));
+              : const Center(child: Text("No Books Returned"));
         }, error: (error, sT) {
           return const AppErrorWidget();
         }, loading: () {

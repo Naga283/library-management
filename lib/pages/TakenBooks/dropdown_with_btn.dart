@@ -59,7 +59,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         )
-                      : const SizedBox.shrink(),
+                      : const Text("No Book"),
                 );
               }).toList(),
             ),

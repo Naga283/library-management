@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
+import 'package:library_books_management/components/error_image_widget.dart';
 import 'package:library_books_management/components/error_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
@@ -39,7 +40,7 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
             50,
           ),
           child: const AppBarWidget(
-            appbarName: "Take Books",
+            appbarName: "Borrowed books",
           ),
         ),
         body: bookDetails.when(data: (data) {
@@ -81,20 +82,35 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                                       child: Image.network(
                                         "https://covers.openlibrary.org/b/id/${data[index].work?.coverId}-M.jpg",
                                         fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return ErrorImageWidget(
+                                              getBookDetails: data[index]
+                                                      .work
+                                                      ?.title?[0]
+                                                      .toUpperCase() ??
+                                                  '');
+                                        },
                                       ),
                                     ),
                                     title: Padding(
                                       padding: const EdgeInsets.only(top: 7.0),
-                                      child:
-                                          Text(data[index].work?.title ?? ''),
+                                      child: Text(data[index].work?.title ??
+                                          'No Title'),
                                     ),
                                     subtitle: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                            data[index].work?.authorNames?[0] ??
-                                                ''),
+                                        Text(data[index]
+                                                .work!
+                                                .authorNames!
+                                                .isNotEmpty
+                                            ? (data[index]
+                                                    .work
+                                                    ?.authorNames?[0] ??
+                                                '')
+                                            : 'No Author'),
                                         ReturnBookBtn(
                                           title: data[index].work?.title ?? '',
                                           onTapOk: () {

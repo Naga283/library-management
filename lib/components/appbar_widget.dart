@@ -16,6 +16,7 @@ class AppBarWidget extends ConsumerWidget {
         appbarName,
         style: TextStyle(
           color: appColors.primary,
+          fontWeight: FontWeight.w800,
         ),
       ),
       centerTitle: true,
