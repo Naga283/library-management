@@ -5,6 +5,7 @@ import 'package:library_books_management/pages/authentication/icon_with_heading_
 import 'package:library_books_management/pages/authentication/login_textform_field.dart';
 import 'package:library_books_management/pages/authentication/password_text_form_field.dart';
 import 'package:library_books_management/pages/authentication/register_page.dart';
+import 'package:library_books_management/providers/is_loading_state_provider.dart';
 import 'package:library_books_management/providers/textformfield_error_text_state_provider.dart';
 import 'package:library_books_management/services/firebase_authentication.dart';
 import 'package:library_books_management/utils/colors.dart';
@@ -18,7 +19,8 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
+  bool isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -32,21 +34,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconWithHeadingAndSubHeading(
+            const IconWithHeadingAndSubHeading(
               heading: 'Login',
             ),
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   LoginTextFormField(
                     hintText: 'Your e-mail',
                     textEditingController: emailController,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   PasswordTextFormField(
@@ -55,18 +57,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     errorText: ref.watch(errorTextFormProvider),
                     onTap: () {
                       setState(() {
-                        if (isPasswordVisible) {
-                          isPasswordVisible = false;
-                        } else {
-                          isPasswordVisible = true;
-                        }
+                        isPasswordVisible = !isPasswordVisible;
                       });
                     },
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Row(
@@ -77,19 +75,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (builder) {
-                          return RegisterPage();
+                          return const RegisterPage();
                         },
                       ),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "Don't have an Account?",
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "Forgot Password?",
                   style: TextStyle(
                     decoration: TextDecoration.underline,
@@ -108,6 +106,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         child: ExpandedElevatedBtn(
           btnName: "Login",
+          isLoading: ref.watch(isLoadingStateProvider),
           onTap: () async {
             if (_formKey.currentState?.validate() ?? false) {
               await loginWithEmailAndPassword(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/modals/get_book_details.dart';
 import 'package:library_books_management/providers/bottom_navbar_current_index_provider.dart';
-import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
 
 class RecentlyAdded extends ConsumerWidget {
@@ -55,7 +54,7 @@ class RecentlyAdded extends ConsumerWidget {
                           height: 120,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       SizedBox(
                         width: 95,
                         child: Text(

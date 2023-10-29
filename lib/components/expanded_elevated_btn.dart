@@ -7,9 +7,11 @@ class ExpandedElevatedBtn extends ConsumerWidget {
     super.key,
     required this.btnName,
     required this.onTap,
+    this.isLoading,
   });
   final String btnName;
   final Function() onTap;
+  final bool? isLoading;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
@@ -22,13 +24,21 @@ class ExpandedElevatedBtn extends ConsumerWidget {
           borderRadius: BorderRadius.circular(6),
         ),
         child: Center(
-          child: Text(
-            btnName,
-            style: TextStyle(
-              color: appColors.whiteColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          child: (isLoading ?? false)
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: appColors.whiteColor,
+                  ),
+                )
+              : Text(
+                  btnName,
+                  style: TextStyle(
+                    color: appColors.whiteColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
         ),
       ),
     );

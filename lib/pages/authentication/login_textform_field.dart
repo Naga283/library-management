@@ -41,6 +41,10 @@ class LoginTextFormField extends ConsumerWidget {
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.8)),
+          ),
           errorText: errorText,
           fillColor: Colors.grey.withOpacity(0.3),
           border: OutlineInputBorder(

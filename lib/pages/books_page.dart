@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/pages/loading/loading_widget.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
 
@@ -129,7 +130,7 @@ class BooksPage extends ConsumerWidget {
       }, error: (error, st) {
         return Text(error.toString());
       }, loading: () {
-        return const CircularProgressIndicator();
+        return const LoadingWidget();
       }),
     );
   }

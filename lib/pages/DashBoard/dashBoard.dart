@@ -5,10 +5,13 @@ import 'package:library_books_management/notifiers/taken_books_from_firestore_no
 import 'package:library_books_management/pages/DashBoard/books_count.dart';
 import 'package:library_books_management/pages/DashBoard/recently_added.dart';
 import 'package:library_books_management/pages/DashBoard/welcome_card.dart';
+import 'package:library_books_management/pages/loading/loading_widget.dart';
+import 'package:library_books_management/pages/loading/shimmer_container.dart';
 import 'package:library_books_management/pages/splash_screen.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:library_books_management/services/firebase_authentication.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DashBoard extends ConsumerStatefulWidget {
   const DashBoard({super.key});
@@ -67,11 +70,7 @@ class _DashBoardState extends ConsumerState<DashBoard> {
     }, error: (error, sT) {
       return const Text("Something went wrong");
     }, loading: () {
-      return Center(
-        child: CircularProgressIndicator(
-          color: appColors.primary,
-        ),
-      );
+      return const LoadingWidget();
     });
   }
 }

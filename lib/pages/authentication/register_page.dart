@@ -5,6 +5,7 @@ import 'package:library_books_management/pages/authentication/icon_with_heading_
 import 'package:library_books_management/pages/authentication/login_page.dart';
 import 'package:library_books_management/pages/authentication/login_textform_field.dart';
 import 'package:library_books_management/pages/authentication/password_text_form_field.dart';
+import 'package:library_books_management/providers/is_loading_state_provider.dart';
 import 'package:library_books_management/services/firebase_authentication.dart';
 import 'package:library_books_management/utils/colors.dart';
 
@@ -20,6 +21,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +99,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           right: 16,
         ),
         child: ExpandedElevatedBtn(
+          isLoading: ref.watch(isLoadingStateProvider),
           btnName: "Register",
           onTap: () async {
             if (_formKey.currentState?.validate() ?? false) {

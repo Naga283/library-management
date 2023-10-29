@@ -8,6 +8,7 @@ import 'package:library_books_management/notifiers/return_books_future_notifier.
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/pages/TakenBooks/dropdown_with_btn.dart';
 import 'package:library_books_management/pages/TakenBooks/return_book_btn.dart';
+import 'package:library_books_management/pages/loading/loading_widget.dart';
 import 'package:library_books_management/providers/firestore_providers/taken_document_ids.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/utils/colors.dart';
@@ -136,7 +137,7 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                 }, error: (error, sT) {
                   return const Text("something went wrong");
                 }, loading: () {
-                  return CircularProgressIndicator();
+                  return const LoadingWidget();
                 })
               ],
             ),
@@ -144,7 +145,7 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
         }, error: (error, sT) {
           return const Text("something went wrong");
         }, loading: () {
-          return const CircularProgressIndicator();
+          return const LoadingWidget();
         }));
   }
 }

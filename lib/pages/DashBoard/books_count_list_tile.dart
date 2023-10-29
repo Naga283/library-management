@@ -31,7 +31,7 @@ class BooksCountListTile extends StatelessWidget {
       child: ListTile(
         title: Text(
           heading,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
           ),
         ),

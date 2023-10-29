@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
+import 'package:library_books_management/pages/loading/loading_widget.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 import 'package:library_books_management/utils/styles.dart';
@@ -50,7 +51,7 @@ class _ReturnBooksState extends ConsumerState<ReturnBooks> {
         }, error: (error, sT) {
           return Text("Something went wrong");
         }, loading: () {
-          return Center(child: CircularProgressIndicator());
+          return const LoadingWidget();
         }));
   }
 }
