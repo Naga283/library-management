@@ -116,6 +116,8 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                                                   takenBooksFutureProvider);
                                               ref.invalidate(
                                                   returnBooksFutureProvider);
+                                              ref.invalidate(
+                                                  getDetailsFutureProvider);
                                               Navigator.of(context).pop();
                                             });
                                           },

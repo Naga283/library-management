@@ -5,6 +5,8 @@ import 'package:library_books_management/pages/books_page.dart';
 import 'package:library_books_management/pages/ReturnedBooks/return_books.dart';
 import 'package:library_books_management/pages/TakenBooks/taken_books.dart';
 import 'package:library_books_management/providers/bottom_navbar_current_index_provider.dart';
+import 'package:library_books_management/providers/get_book_details_future_provider.dart';
+import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 import 'package:library_books_management/services/get_current_user_name.dart';
 import 'package:library_books_management/utils/colors.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -42,6 +44,12 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.read(currentIndexStateProvider.notifier).state = p0;
           if (p0 == 3) {
             ref.invalidate(returnBooksFutureProvider);
+          }
+          if (p0 == 2) {
+            ref.read(selectBookFromDropdownProvider.notifier).state = null;
+          }
+          if (p0 == 0) {
+            ref.invalidate(getDetailsFutureProvider);
           }
         },
         items: [

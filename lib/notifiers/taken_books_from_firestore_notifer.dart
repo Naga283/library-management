@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/providers/firestore_providers/firestore_provider.dart';
 import 'package:library_books_management/providers/firestore_providers/taken_document_ids.dart';
+import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/providers/home_page_providers/taken_books_count_state_provider.dart';
 
 final takenBooksFutureProvider =
@@ -20,6 +21,7 @@ final takenBooksFutureProvider =
     ref.read(takenDocumentIdStateProvider.notifier).state.add(doc.id);
     return ReadingLogEntry.fromJson(doc.data() as Map<String, dynamic>);
   }).toList();
+  ref.invalidate(getDetailsFutureProvider);
   ref.read(takenBooksCountValueStateProvider.notifier).state =
       myDataList.length;
   return myDataList;

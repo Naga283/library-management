@@ -33,7 +33,7 @@ class BooksCount extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 15.0),
             child: BooksCountListTile(
               borderColor: appColors.primary,
-              count: '${overallBooksCount - takenBooksCount}',
+              count: '$overallBooksCount',
               heading: 'Available Books',
               subHeading: 'Available books in library',
             ),

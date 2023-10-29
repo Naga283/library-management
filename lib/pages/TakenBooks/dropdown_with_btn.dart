@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/components/expanded_elevated_btn.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
+import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 
@@ -30,8 +31,8 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 20),
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          margin: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           width: screenSizeUtils.screenWidth(context) * 0.9,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
@@ -40,7 +41,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton(
-              hint: Text("Select book for Borrow"),
+              hint: const Text("Select book for Borrow"),
               value: ref.watch(selectBookFromDropdownProvider),
               onChanged: (val) {
                 ref.read(selectBookFromDropdownProvider.notifier).state = val;
@@ -63,14 +64,16 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         ExpandedElevatedBtn(
           btnName: 'Borrow',
           onTap: () {
             if (ref.watch(selectBookFromDropdownProvider) != null) {
               users.doc(userId?.uid).collection("Taken").add(
                   ref.watch(selectBookFromDropdownProvider)?.toJson() ?? {});
+              ref.read(selectBookFromDropdownProvider.notifier).state = null;
               ref.invalidate(takenBooksFutureProvider);
+              ref.invalidate(getDetailsFutureProvider);
             } else {}
           },
         )
