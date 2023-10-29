@@ -5,7 +5,7 @@ A new Flutter project.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-
+<img src="https://github.com/Naga283/library-management/assets/75671317/9331a496-0f97-41cc-8dee-0a67d4b68e1c"/>
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
