@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
+import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/pages/TakenBooks/dropdown_with_btn.dart';
 import 'package:library_books_management/pages/TakenBooks/return_book_btn.dart';
@@ -26,7 +27,6 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.uid);
     final takenDocIds = ref.watch(takenDocumentIdStateProvider);
-    print("Length " + takenDocIds.length.toString());
     final bookDetails = ref.watch(getDetailsFutureProvider);
     final myTakenBooks = ref.watch(takenBooksFutureProvider);
     return Scaffold(
@@ -62,7 +62,6 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                           child: ListView.builder(
                               itemCount: data.length,
                               itemBuilder: (builder, index) {
-                                print("check docIds" + takenDocIds[index]);
                                 return Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4),
@@ -112,10 +111,13 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                                                 .add(
                                                   data[index].toJson(),
                                                 )
-                                                .whenComplete(() {});
-                                            ref.invalidate(
-                                                takenBooksFutureProvider);
-                                            Navigator.of(context).pop();
+                                                .whenComplete(() {
+                                              ref.invalidate(
+                                                  takenBooksFutureProvider);
+                                              ref.invalidate(
+                                                  returnBooksFutureProvider);
+                                              Navigator.of(context).pop();
+                                            });
                                           },
                                         )
                                       ],

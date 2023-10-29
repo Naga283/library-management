@@ -27,65 +27,67 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         elevation: 0,
         backgroundColor: appColors.whiteColor.withOpacity(0.4),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const IconWithHeadingAndSubHeading(heading: "Sign Up"),
-            SizedBox(
-              height: 30,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  LoginTextFormField(
-                    hintText: "Full name",
-                    textEditingController: fullNameController,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  LoginTextFormField(
-                    hintText: "Your e-mail",
-                    textEditingController: emailController,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  PasswordTextFormField(
-                      isPasswordVisible: isPasswordVisible,
-                      passwordController: passwordController,
-                      onTap: () {
-                        setState(() {
-                          isPasswordVisible = !isPasswordVisible;
-                        });
-                      }),
-                ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const IconWithHeadingAndSubHeading(heading: "Sign Up"),
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (builder) {
-                      return LoginPage();
-                    },
-                  ),
-                );
-              },
-              child: Text(
-                "Already Have an account?",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    LoginTextFormField(
+                      hintText: "Full name",
+                      textEditingController: fullNameController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    LoginTextFormField(
+                      hintText: "Your e-mail",
+                      textEditingController: emailController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    PasswordTextFormField(
+                        isPasswordVisible: isPasswordVisible,
+                        passwordController: passwordController,
+                        onTap: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        }),
+                  ],
                 ),
               ),
-            )
-          ],
+              const SizedBox(
+                height: 13,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (builder) {
+                        return const LoginPage();
+                      },
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Already Have an account?",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(

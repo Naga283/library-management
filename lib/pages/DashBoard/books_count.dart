@@ -8,12 +8,14 @@ import 'package:library_books_management/utils/colors.dart';
 class BooksCount extends ConsumerWidget {
   const BooksCount({
     super.key,
+    required this.overallBooksCount,
   });
-
+  final int overallBooksCount;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final returnBooksCount = ref.watch(returnCountStateProvider);
     final takenBooksCount = ref.watch(takenBooksCountValueStateProvider);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Column(
@@ -31,7 +33,7 @@ class BooksCount extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 15.0),
             child: BooksCountListTile(
               borderColor: appColors.primary,
-              count: '200',
+              count: '${overallBooksCount - takenBooksCount}',
               heading: 'Available Books',
               subHeading: 'Available books in library',
             ),
