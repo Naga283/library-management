@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
+import 'package:library_books_management/components/error_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/pages/TakenBooks/dropdown_with_btn.dart';
@@ -133,9 +134,9 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
                                 );
                               }),
                         )
-                      : Center(child: Text("No Books Taken"));
+                      : const Center(child: Text("No Books Taken"));
                 }, error: (error, sT) {
-                  return const Text("something went wrong");
+                  return const AppErrorWidget();
                 }, loading: () {
                   return const LoadingWidget();
                 })
@@ -143,7 +144,7 @@ class _TakenBooksState extends ConsumerState<TakenBooks> {
             ),
           );
         }, error: (error, sT) {
-          return const Text("something went wrong");
+          return const AppErrorWidget();
         }, loading: () {
           return const LoadingWidget();
         }));

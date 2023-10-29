@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/error_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/pages/DashBoard/books_count.dart';
@@ -68,7 +69,7 @@ class _DashBoardState extends ConsumerState<DashBoard> {
         ),
       );
     }, error: (error, sT) {
-      return const Text("Something went wrong");
+      return const AppErrorWidget();
     }, loading: () {
       return const LoadingWidget();
     });

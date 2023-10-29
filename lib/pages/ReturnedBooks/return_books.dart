@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/components/appbar_widget.dart';
+import 'package:library_books_management/components/error_widget.dart';
 import 'package:library_books_management/notifiers/return_books_future_notifier.dart';
 import 'package:library_books_management/pages/loading/loading_widget.dart';
 import 'package:library_books_management/utils/colors.dart';
@@ -49,7 +50,7 @@ class _ReturnBooksState extends ConsumerState<ReturnBooks> {
                   })
               : Center(child: Text("No Books Returned"));
         }, error: (error, sT) {
-          return Text("Something went wrong");
+          return const AppErrorWidget();
         }, loading: () {
           return const LoadingWidget();
         }));
