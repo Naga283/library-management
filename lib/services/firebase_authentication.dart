@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/pages/home_page.dart';
 import 'package:library_books_management/pages/splash_screen.dart';
+import 'package:library_books_management/providers/firestore_providers/taken_document_ids.dart';
+import 'package:library_books_management/providers/home_page_providers/return_count_state_provider.dart';
+import 'package:library_books_management/providers/home_page_providers/taken_books_count_state_provider.dart';
 import 'package:library_books_management/providers/is_loading_state_provider.dart';
 import 'package:library_books_management/services/get_current_user_name.dart';
 
@@ -47,11 +50,13 @@ Future<void> registerWithEmailAndPassword(String fullName, String email,
 }
 
 //Logout
-Future<void> logoutUser(
-  context,
-) async {
+Future<void> logoutUser(context, WidgetRef ref) async {
   try {
     await FirebaseAuth.instance.signOut();
+    ref.read(takenDocumentIdStateProvider.notifier).state = [];
+    ref.read(takenBooksCountValueStateProvider.notifier).state = 0;
+    ref.read(returnCountStateProvider.notifier).state = 0;
+
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (builder) {
       return const SplashScreen();

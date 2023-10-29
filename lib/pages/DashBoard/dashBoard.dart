@@ -35,7 +35,7 @@ class _DashBoardState extends ConsumerState<DashBoard> {
             IconButton(
                 onPressed: () {
                   alertDailogue(context, "Logout", () async {
-                    await logoutUser(context);
+                    await logoutUser(context, ref);
                   }, "Please Click on Ok to Logout");
                 },
                 icon: const Icon(Icons.logout)),

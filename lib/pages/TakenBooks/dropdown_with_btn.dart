@@ -69,19 +69,21 @@ class DropDownWithBtn extends ConsumerWidget {
           isLoading: ref.watch(isLoadingStateProvider),
           btnName: 'Borrow',
           onTap: () {
-            if (ref.watch(selectBookFromDropdownProvider) != null) {
-              users
-                  .doc(userId?.uid)
-                  .collection("Taken")
-                  .add(
-                      ref.watch(selectBookFromDropdownProvider)?.toJson() ?? {})
-                  .whenComplete(() {
-                ref.invalidate(getDetailsFutureProvider);
-              });
+            if (!ref.watch(isLoadingStateProvider)) {
+              if (ref.watch(selectBookFromDropdownProvider) != null) {
+                users
+                    .doc(userId?.uid)
+                    .collection("Taken")
+                    .add(ref.watch(selectBookFromDropdownProvider)?.toJson() ??
+                        {})
+                    .whenComplete(() {
+                  ref.invalidate(getDetailsFutureProvider);
+                });
 
-              ref.invalidate(takenBooksFutureProvider);
-              Fluttertoast.showToast(msg: "Successfull Added");
-            } else {}
+                ref.invalidate(takenBooksFutureProvider);
+                Fluttertoast.showToast(msg: "Successfull Added");
+              } else {}
+            }
           },
         )
       ],
