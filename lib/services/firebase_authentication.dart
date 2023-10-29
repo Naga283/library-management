@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:library_books_management/pages/home_page.dart';
+import 'package:library_books_management/pages/splash_screen.dart';
 import 'package:library_books_management/providers/is_loading_state_provider.dart';
-import 'package:library_books_management/providers/textformfield_error_text_state_provider.dart';
 import 'package:library_books_management/services/get_current_user_name.dart';
 
 Future<void> registerWithEmailAndPassword(String fullName, String email,
@@ -47,9 +47,15 @@ Future<void> registerWithEmailAndPassword(String fullName, String email,
 }
 
 //Logout
-Future<void> logoutUser() async {
+Future<void> logoutUser(
+  context,
+) async {
   try {
     await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (builder) {
+      return const SplashScreen();
+    }), (route) => false);
   } catch (e) {
     throw Exception();
   }

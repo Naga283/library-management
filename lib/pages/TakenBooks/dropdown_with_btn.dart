@@ -59,7 +59,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         )
-                      : const Text("No Book"),
+                      : const Text("No Title"),
                 );
               }).toList(),
             ),
@@ -71,11 +71,16 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
           btnName: 'Borrow',
           onTap: () {
             if (ref.watch(selectBookFromDropdownProvider) != null) {
-              users.doc(userId?.uid).collection("Taken").add(
-                  ref.watch(selectBookFromDropdownProvider)?.toJson() ?? {});
+              users
+                  .doc(userId?.uid)
+                  .collection("Taken")
+                  .add(
+                      ref.watch(selectBookFromDropdownProvider)?.toJson() ?? {})
+                  .whenComplete(() {
+                ref.invalidate(getDetailsFutureProvider);
+              });
               ref.read(selectBookFromDropdownProvider.notifier).state = null;
               ref.invalidate(takenBooksFutureProvider);
-              ref.invalidate(getDetailsFutureProvider);
               Fluttertoast.showToast(msg: "Successfull Added");
             } else {}
           },

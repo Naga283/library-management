@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:library_books_management/modals/get_book_details.dart';
 import 'package:library_books_management/modals/reading_log.dart';
+import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/providers/firestore_providers/firestore_provider.dart';
 import 'package:library_books_management/providers/firestore_providers/taken_document_ids.dart';
 import 'package:library_books_management/utils/apis.dart';
@@ -39,30 +40,20 @@ class GetBooksDetailsNotifier {
           return ReadingLogEntry.fromJson(doc.data() as Map<String, dynamic>);
         }).toList();
 
-        print("inside outside loop 1");
         // convertVal.readingLogEntries.map((e) => print("inside loop"));
         for (int i = 0; i < myDataList.length; i++) {
-          print("inside loop");
           for (int j = 0; j < convertVal.readingLogEntries.length; j++) {
-            print("valuess i value " +
-                (convertVal.readingLogEntries[j].work?.title ?? ''));
-            print("valuess " + (myDataList[i].work?.title ?? ''));
             if (convertVal.readingLogEntries[j].work?.title ==
                 (myDataList[i].work?.title ?? '')) {
               convertVal.readingLogEntries.removeAt(j);
             }
           }
         }
-
         return convertVal;
       } catch (e, sT) {
-        print("errr " + e.toString());
-        print("statk trce " + sT.toString());
         throw Exception();
       }
     } catch (e, sT) {
-      print("Error" + e.toString());
-      print("stach trace" + sT.toString());
       throw Exception(e);
     }
   }

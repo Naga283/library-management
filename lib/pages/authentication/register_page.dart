@@ -20,7 +20,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {

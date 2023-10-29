@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:library_books_management/components/dailoge.dart';
 
 class ReturnBookBtn extends ConsumerWidget {
   const ReturnBookBtn({
@@ -21,26 +22,14 @@ class ReturnBookBtn extends ConsumerWidget {
             ),
           ),
           onPressed: () {
-            showDialog(
-                context: context,
-                builder: (builder) {
-                  return AlertDialog(
-                    title: Text(title),
-                    content: Text("Please Click on OK to return book"),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: onTapOk,
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                });
+            alertDailogue(
+              context,
+              title,
+              onTapOk,
+              "Please Click on OK to return book",
+            );
           },
-          child: Text(
+          child: const Text(
             "Return",
             style: TextStyle(fontSize: 13),
           )),

@@ -8,7 +8,7 @@ import 'package:library_books_management/providers/get_book_details_future_provi
 import 'package:library_books_management/providers/home_page_providers/taken_books_count_state_provider.dart';
 
 final takenBooksFutureProvider =
-    FutureProvider<List<ReadingLogEntry>>((ref) async {
+    FutureProvider.autoDispose<List<ReadingLogEntry>>((ref) async {
   final firestore = ref.read(firestoreProvider);
 
   final userId = FirebaseAuth.instance.currentUser;
