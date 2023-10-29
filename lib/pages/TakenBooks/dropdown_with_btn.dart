@@ -7,10 +7,11 @@ import 'package:library_books_management/components/expanded_elevated_btn.dart';
 import 'package:library_books_management/modals/reading_log.dart';
 import 'package:library_books_management/notifiers/taken_books_from_firestore_notifer.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
+import 'package:library_books_management/providers/is_loading_state_provider.dart';
 import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 import 'package:library_books_management/utils/screen_size_utils.dart';
 
-class DropDownWithBtn extends ConsumerStatefulWidget {
+class DropDownWithBtn extends ConsumerWidget {
   const DropDownWithBtn({
     super.key,
     required this.list,
@@ -19,16 +20,11 @@ class DropDownWithBtn extends ConsumerStatefulWidget {
   final List<ReadingLogEntry> list;
 
   @override
-  ConsumerState<DropDownWithBtn> createState() => _DropDownWithBtnState();
-}
-
-class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-  final userId = FirebaseAuth.instance.currentUser;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final userId = FirebaseAuth.instance.currentUser;
     ref.watch(selectBookFromDropdownProvider);
+    final isLoading = ref.watch(isLoadingStateProvider);
     return Column(
       children: [
         Container(
@@ -47,19 +43,22 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
               onChanged: (val) {
                 ref.read(selectBookFromDropdownProvider.notifier).state = val;
               },
-              items: widget.list.map<DropdownMenuItem<ReadingLogEntry>>(
+              items: list.map<DropdownMenuItem<ReadingLogEntry>>(
                   (ReadingLogEntry value) {
                 return DropdownMenuItem<ReadingLogEntry>(
                   value: value,
-                  child: value.work?.title != null
-                      ? SizedBox(
-                          width: screenSizeUtils.screenWidth(context) * 0.78,
-                          child: Text(
-                            value.work?.title ?? '',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        )
-                      : const Text("No Title"),
+                  child: isLoading
+                      ? Center(child: Text("Please wait"))
+                      : value.work?.title != null
+                          ? SizedBox(
+                              width:
+                                  screenSizeUtils.screenWidth(context) * 0.78,
+                              child: Text(
+                                value.work?.title ?? '',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          : const Text("No Title"),
                 );
               }).toList(),
             ),
@@ -67,7 +66,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
         ),
         const SizedBox(height: 10),
         ExpandedElevatedBtn(
-          // isLoading: ,
+          isLoading: ref.watch(isLoadingStateProvider),
           btnName: 'Borrow',
           onTap: () {
             if (ref.watch(selectBookFromDropdownProvider) != null) {
@@ -79,7 +78,7 @@ class _DropDownWithBtnState extends ConsumerState<DropDownWithBtn> {
                   .whenComplete(() {
                 ref.invalidate(getDetailsFutureProvider);
               });
-              ref.read(selectBookFromDropdownProvider.notifier).state = null;
+
               ref.invalidate(takenBooksFutureProvider);
               Fluttertoast.showToast(msg: "Successfull Added");
             } else {}

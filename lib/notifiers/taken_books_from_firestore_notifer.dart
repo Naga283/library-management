@@ -6,6 +6,7 @@ import 'package:library_books_management/providers/firestore_providers/firestore
 import 'package:library_books_management/providers/firestore_providers/taken_document_ids.dart';
 import 'package:library_books_management/providers/get_book_details_future_provider.dart';
 import 'package:library_books_management/providers/home_page_providers/taken_books_count_state_provider.dart';
+import 'package:library_books_management/providers/select_book_from_dropdown.dart';
 
 final takenBooksFutureProvider =
     FutureProvider.autoDispose<List<ReadingLogEntry>>((ref) async {

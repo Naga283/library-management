@@ -39,7 +39,9 @@ class RecentlyAdded extends ConsumerWidget {
         SizedBox(
           height: 200,
           child: ListView.builder(
-              itemCount: 5,
+              itemCount: getBookDetails.readingLogEntries.length > 5
+                  ? 5
+                  : getBookDetails.readingLogEntries.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
@@ -80,8 +82,12 @@ class RecentlyAdded extends ConsumerWidget {
                         width: 95,
                         child: Text(
                           getBookDetails.readingLogEntries[index].work
-                                  ?.authorNames?[0] ??
-                              '',
+                                      ?.authorNames?.isNotEmpty ??
+                                  false
+                              ? (getBookDetails.readingLogEntries[index].work
+                                      ?.authorNames?[0] ??
+                                  '')
+                              : "No Authour",
                           overflow: TextOverflow.ellipsis,
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 11),
